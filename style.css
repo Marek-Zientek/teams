@@ -1,0 +1,58 @@
+*,
+*::before,
+*::after {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+body {
+	width: 100vw;
+	height: 100vh;
+	display: grid;
+	place-items: center;
+}
+
+.avatars {
+	--avatar-count: 10;
+	--avatar-size: 70px;
+	--transition-duration: 500ms;
+
+	--column-size: calc(var(--avatar-size) / 2);
+
+	display: grid;
+	grid-template-columns: repeat(var(--avatar-count), var(--column-size));
+	transition: grid-template-columns var(--transition-duration);
+	transition-delay: var(--transition-duration);
+}
+
+.avatars:hover,
+.avatars:focus-within {
+	--column-size: calc(var(--avatar-size) * 1.5);
+	transition-delay: 0ms;
+}
+
+.avatar {
+	width: var(--avatar-size);
+	aspect-ratio: 1;
+	object-fit: cover;
+	border-radius: 100vw;
+	border: 5px solid white;
+	box-shadow: 0.25rem 0.25rem 0.5rem hsl(0 0% 0% / 0.2);
+
+	transition: scale var(--transition-duration);
+}
+
+.avatar:hover,
+.avatar:focus {
+	scale: 2;
+	z-index: 2;
+}
+
+@supports selector(:has(+ *)) {
+	.avatar:hover + .avatar,
+	.avatar:has(+ .avatar:hover) {
+		scale: 1.5;
+		/* border-color: lime; */
+	}
+}
